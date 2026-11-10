@@ -1,5 +1,4 @@
-
-4-Bit Carry Look-Ahead Adder (CLA) Using Verilog HDL
+#4-Bit Carry Look-Ahead Adder (CLA) Using Verilog HDL
 📌 Project Overview
 
 This project implements a 4-bit Carry Look-Ahead Adder (CLA) using Verilog HDL.
