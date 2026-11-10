@@ -1,140 +1,171 @@
-4-Bit Carry Look-Ahead Adder (CLA) Using Verilog HDL
-📌 Project Overview
 
-This project implements a 4-bit Carry Look-Ahead Adder (CLA) using Verilog HDL.
+# ⚡ 4-Bit Carry Look-Ahead Adder (CLA) Using Verilog HDL
 
-A Carry Look-Ahead Adder is a fast adder circuit that reduces carry propagation delay by generating carry signals in parallel instead of waiting for each carry to propagate through successive full adders.
+## 📌 Project Overview
 
-The design performs 4-bit binary addition with an input carry (Cin) and produces a 4-bit sum (S) and a final carry output (Cout).
+This project implements a **4-bit Carry Look-Ahead Adder (CLA)** using Verilog HDL.
 
-🎯 Objectives
-To design a 4-bit Carry Look-Ahead Adder using Verilog HDL.
-To understand Generate and Propagate signals.
-To implement parallel carry-generation logic.
-To verify the design using a Verilog testbench.
-To analyze the simulation waveform using Synopsys Verdi.
-⚙️ Design Specifications
-Parameter	Description
-Design	4-bit Carry Look-Ahead Adder
-Language	Verilog HDL
-Inputs	A[3:0], B[3:0], Cin
-Outputs	S[3:0], Cout
-Architecture	Carry Look-Ahead
-Simulation Tool	Synopsys Verdi
-🧠 Working Principle
+A Carry Look-Ahead Adder is a high-speed adder that reduces carry propagation delay by generating carry signals in parallel instead of waiting for each carry to propagate through successive stages.
 
-The Carry Look-Ahead Adder uses two important signals:
+## 🎯 Objectives
 
-1. Generate (G)
+- 💡 Design a 4-bit Carry Look-Ahead Adder using Verilog HDL.
+- 📖 Understand Generate and Propagate signals.
+- ⚙️ Implement parallel carry generation logic.
+- 🧪 Verify the design using a Verilog testbench.
+- 📊 Analyze simulation waveforms using Synopsys Verdi.
+
+## ⚙️ Design Specifications
+
+| Parameter | Description |
+|---|---|
+| 🔧 Design | 4-bit Carry Look-Ahead Adder |
+| 💻 Language | Verilog HDL |
+| 📥 Inputs | A[3:0], B[3:0], Cin |
+| 📤 Outputs | S[3:0], Cout |
+| 🏗️ Architecture | Carry Look-Ahead |
+| 🖥️ Simulation Tool | Synopsys Verdi |
+
+## 🧠 Working Principle
+
+The Carry Look-Ahead Adder uses two important signals.
+
+### 1️⃣ Generate Signal (G)
 
 A carry is generated when both input bits are 1.
 
 G[i] = A[i] & B[i]
 
-2. Propagate (P)
+### 2️⃣ Propagate Signal (P)
 
 A carry is propagated when the XOR of the two input bits is 1.
 
 P[i] = A[i] ^ B[i]
 
-Carry Generation Equations
+### 3️⃣ Carry Generation Equations
 
-The carry signals are calculated using parallel Boolean expressions.
+```text
+C1 = G0 + P0.Cin
 
-C1 = G0 + P0·Cin
-C2 = G1 + P1·G0 + P1·P0·Cin
-C3 = G2 + P2·G1 + P2·P1·G0 + P2·P1·P0·Cin
-C4 = G3 + P3·G2 + P3·P2·G1 + P3·P2·P1·G0 + P3·P2·P1·P0·Cin
-Sum Equations
+C2 = G1 + P1.G0 + P1.P0.Cin
+
+C3 = G2 + P2.G1 + P2.P1.G0
+     + P2.P1.P0.Cin
+
+C4 = G3 + P3.G2 + P3.P2.G1
+     + P3.P2.P1.G0
+     + P3.P2.P1.P0.Cin
+```
+
+### 4️⃣ Sum Equations
+
+```text
 S0 = P0 XOR Cin
 S1 = P1 XOR C1
 S2 = P2 XOR C2
 S3 = P3 XOR C3
 
-The final carry output is:
-
 Cout = C4
+```
 
-📂 Project Structure
-text
-4-bit-Carry-Look-Ahead-Adder/
-│
-├── cla.v               # Verilog design code
-├── cla_tb.v            # Verilog testbench
-├── cla.vcd             # Simulation waveform file
-├── 4bitclaoutput.png   # Simulation waveform screenshot
-└── README.md           # Project documentation
+## 📂 Project Structure
 
-🧪 Test Cases
+```text
+4-Bit-Carry-Look-Ahead-Adder/
+|
+|-- 📄 cla.v
+|-- 📄 cla_tb.v
+|-- 🖼️ waveform.png
+|-- 📘 README.md
+```
+
+## 🧪 Test Cases
 
 The design is verified using seven different test cases.
 
-Test Case	A	B	Cin	Expected Sum	Cout
-1	8	4	0	12	0
-2	5	3	1	9	0
-3	3	5	0	8	0
-4	15	1	0	0	1
-5	15	15	1	15	1
-6	0	0	0	0	0
-7	9	7	1	1	1
-Test Case Explanation
-Normal Addition: Tests addition of two numbers without an input carry.
-Carry Input: Tests addition with Cin = 1.
-Basic Addition: Verifies another normal addition combination.
-Overflow: Checks carry generation when the result exceeds 4 bits.
-Maximum Addition: Tests maximum input values with carry input.
-Zero Addition: Verifies addition of two zero values.
-Carry Generation: Checks carry generation with a carry input.
-💻 Simulation
+| Test Case | A | B | Cin | Sum | Cout |
+|---|---:|---:|---:|---:|---:|
+| 1️⃣ | 8 | 4 | 0 | 12 | 0 |
+| 2️⃣ | 5 | 3 | 1 | 9 | 0 |
+| 3️⃣ | 3 | 5 | 0 | 8 | 0 |
+| 4️⃣ | 15 | 1 | 0 | 0 | 1 |
+| 5️⃣ | 15 | 15 | 1 | 15 | 1 |
+| 6️⃣ | 0 | 0 | 0 | 0 | 0 |
+| 7️⃣ | 9 | 7 | 1 | 1 | 1 |
 
-The design was simulated using Synopsys Verdi.
+## 🔍 Test Case Explanation
 
-Steps to Run
-Write the design code in cla.v.
-Write the testbench code in cla_tb.v.
-Compile and simulate both Verilog files.
-Generate the waveform using $dumpfile and $dumpvars, or use the waveform database supported by your simulator.
-Open the simulation waveform in Verdi.
-Observe the input and output signals.
-Simulation Commands (Icarus Verilog)
-bash
-iverilog -o cla_sim cla.v cla_tb.v
-vvp cla_sim
-gtkwave cla.vcd
+1. ➕ Normal Addition: Tests addition without an input carry.
+2. 🔄 Carry Input: Tests addition with Cin = 1.
+3. 🔢 Basic Addition: Verifies another normal addition.
+4. ⚠️ Overflow: Checks carry generation when the result exceeds 4 bits.
+5. 🔥 Maximum Addition: Tests maximum input values with carry input.
+6. 0️⃣ Zero Addition: Verifies addition of two zero values.
+7. 📈 Carry Generation: Checks carry generation with an input carry.
 
-📊 Simulation Results
+## 💻 Simulation
 
-The waveform verifies the following signals:
+The design was simulated using **Synopsys Verdi**.
 
-a[3:0] – First 4-bit input.
-b[3:0] – Second 4-bit input.
-c0 – Input carry.
-S[3:0] – Sum output.
-Cout – Final carry output.
+### 🚀 Simulation Steps
 
-All seven test cases produce the expected sum and carry values.
+1. Write the design code in `cla.v`.
+2. Write the testbench code in `cla_tb.v`.
+3. Compile and simulate both Verilog files.
+4. Generate the simulation waveform.
+5. Observe the input and output signals in Verdi.
 
-Waveform Output
+### 🛠️ Synopsys Verilog Commands
 
-!4-bit Carry Look-Ahead Adder Simulation
+```bash
+vcs -full64 -kdb -debug_access+all cla.v cla_tb.v
+```
 
-✅ Advantages of Carry Look-Ahead Adder
-Reduces carry propagation delay.
-Faster than a conventional Ripple Carry Adder for comparable bit widths.
-Generates carry signals using parallel logic.
-Suitable for high-speed arithmetic circuits.
-📚 Applications
-Arithmetic Logic Units (ALUs).
-Digital Signal Processing (DSP).
-Microprocessors.
-High-speed arithmetic circuits.
-Computer architecture.
-🏁 Conclusion
+## 📊 Simulation Results
 
-The 4-bit Carry Look-Ahead Adder was successfully designed and simulated using Verilog HDL. The design uses Generate and Propagate signals to calculate carry outputs in parallel, reducing carry propagation delay compared with a Ripple Carry Adder.
+The following signals were observed in the waveform:
 
-The simulation results match the expected outputs for all seven test cases, verifying the correct functionality of the design.
+- 📥 `a[3:0]` - First input.
+- 📥 `b[3:0]` - Second input.
+- 🔁 `c0` - Input carry.
+- 📤 `S[3:0]` - Sum output.
+- 📤 `Cout` - Final carry output.
 
-Tools Used: Verilog HDL | Synopsys Verdi | Linux
+✅ All seven test cases produce the expected sum and carry outputs.
 
-Project Type: Digital Electronics / VLSI Design
+### 🖼️ Simulation Waveform
+
+![4-Bit CLA Simulation Waveform](waveform.png)
+
+## ⭐ Advantages
+
+- ⚡ Reduces carry propagation delay.
+- 🚀 Faster than a conventional Ripple Carry Adder for comparable bit widths.
+- 🔄 Generates carry signals using parallel logic.
+- 💡 Suitable for high-speed arithmetic circuits.
+
+## 🌐 Applications
+
+- 🖥️ Arithmetic Logic Units (ALUs).
+- 📡 Digital Signal Processing.
+- 💻 Microprocessors.
+- ⚙️ High-speed arithmetic circuits.
+- 🏗️ Computer Architecture.
+
+## 🏁 Conclusion
+
+The 4-bit Carry Look-Ahead Adder was successfully designed and simulated using Verilog HDL.
+
+The design uses Generate and Propagate signals to calculate carry outputs in parallel, reducing carry propagation delay compared with a Ripple Carry Adder.
+
+✅ The simulation results match the expected outputs for all seven test cases, verifying the correct functionality of the design.
+
+---
+
+### 👨‍💻 Tools & Technologies
+
+- Verilog HDL
+- Synopsys Verdi
+- Linux
+
+**📌 Project Category:** Digital Electronics | VLSI Design
